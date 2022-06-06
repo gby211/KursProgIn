@@ -1,177 +1,94 @@
 package com.example.kursprogin.ui.details
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.example.kursprogin.R
+import com.example.kursprogin.data.room.DbRoom
+import com.example.kursprogin.data.room.dto.FavouriteDto
+import com.example.kursprogin.databinding.FragmentDetailsBinding
+import com.example.kursprogin.myRef
+import com.example.kursprogin.ui.home.DataFromList
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.ValueEventListener
+import com.squareup.picasso.Picasso
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.withContext
 
 class DetailsFragment : Fragment() {
 
+
+    private lateinit var dbbbb : DbRoom
+    private var _binding: FragmentDetailsBinding? = null
+    private val binding get() = _binding!!
+    private var s : Int = 1
+    private var firstUrl = "https://firebasestorage.googleapis.com/v0/b/kursovaia-f942a.appspot.com/o/1.1.jpg?alt=media&token=1fb6724e-2bb9-415f-b7af-0be0ffd9d2e6"
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_details, container, false)
+        _binding = FragmentDetailsBinding.inflate(inflater, container, false)
+
+        dbbbb = DbRoom(requireContext())
+        val b = arguments
+        s = b!!.getInt("idDisk")
+
+        binding.textViewName.text = s.toString()
+        readDb()
+
+        binding.imageViewB.setOnClickListener {
+            runBlocking { dbbbb.getFavouriteDao().saveFavourite(FavouriteDto(s,binding.textViewName.text.toString(),firstUrl)) }
+
+        }
+
+        return binding.root
     }
 
-//    private val parent_view: View? = null
-//    private var viewPager: ViewPager? = null
-//    private var layout_dots: LinearLayout? = null
-//    private var adapterImageSlider: AdapterImageSlider? = null
-//
-//    private val array_image_product = intArrayOf(
-//        R.drawable.image_shop_9,
-//        R.drawable.image_shop_10,
-//        R.drawable.image_shop_11,
-//        R.drawable.image_shop_12,
-//        R.drawable.image_shop_13
-//    )
-//
-//    public override fun onCreate(savedInstanceState: Bundle?) {
-//        super.onCreate(savedInstanceState)
-//        setContentView(R.layout.fragment_details)
-//        initToolbar()
-//        initComponent()
-//    }
-//
-//    private fun initToolbar() {
-//        val toolbar = findViewById<View>(R.id.toolbar) as Toolbar
-//        toolbar.setNavigationIcon(R.drawable.ic_menu)
-//        setSupportActionBar(toolbar)
-//        getSupportActionBar()?.setTitle("Product")
-//        getSupportActionBar()?.setDisplayHomeAsUpEnabled(true)
-//    }
-//
-//    private fun initComponent() {
-//        layout_dots = findViewById<View>(R.id.layout_dots) as LinearLayout?
-//        viewPager = findViewById<View>(R.id.pager) as ViewPager?
-//        adapterImageSlider = AdapterImageSlider(this, ArrayList<Image>())
-//        val items: MutableList<Image> = ArrayList<Image>()
-//        for (i in array_image_product) {
-//            items.add( ContextCompat.getDrawable(this, R.drawable.diski_png) )
-//        }
-//        adapterImageSlider!!.setItems(items)
-//        viewPager!!.adapter = adapterImageSlider
-//
-//        // displaying selected image first
-//        viewPager!!.currentItem = 0
-//        addBottomDots(layout_dots, adapterImageSlider!!.count, 0)
-//        viewPager!!.addOnPageChangeListener(object : OnPageChangeListener {
-//            override fun onPageScrolled(
-//                pos: Int,
-//                positionOffset: Float,
-//                positionOffsetPixels: Int
-//            ) {
-//            }
-//
-//            override fun onPageSelected(pos: Int) {
-//                addBottomDots(layout_dots, adapterImageSlider!!.count, pos)
-//            }
-//
-//            override fun onPageScrollStateChanged(state: Int) {}
-//        })
-//    }
-//
-//    private fun addBottomDots(layout_dots: LinearLayout?, size: Int, current: Int) {
-//        val dots = arrayOfNulls<ImageView>(size)
-//        layout_dots!!.removeAllViews()
-//        for (i in dots.indices) {
-//            dots[i] = ImageView(this)
-//            val width_height = 15
-//            val params =
-//                LinearLayout.LayoutParams(ViewGroup.LayoutParams(width_height, width_height))
-//            params.setMargins(10, 10, 10, 10)
-//            dots[i]!!.layoutParams = params
-//            dots[i]!!.setImageResource(R.drawable.shape_circle)
-//            dots[i]!!
-//                .setColorFilter(
-//                    ContextCompat.getColor(this, R.color.overlay_dark_10),
-//                    PorterDuff.Mode.SRC_ATOP
-//                )
-//            layout_dots.addView(dots[i])
-//        }
-//        if (dots.size > 0) {
-//            dots[current]!!
-//                .setColorFilter(
-//                    ContextCompat.getColor(this, R.color.colorPrimaryLight),
-//                    PorterDuff.Mode.SRC_ATOP
-//                )
-//        }
-//    }
-//
-//    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-//        getMenuInflater().inflate(R.menu.menu_search_setting, menu)
-//        return true
-//    }
-//
-//    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-//        if (item.itemId == android.R.id.home) {
-//            finish()
-//        } else {
-//            Toast.makeText(getApplicationContext(), item.title, Toast.LENGTH_SHORT).show()
-//        }
-//        return super.onOptionsItemSelected(item)
-//    }
-//
-//
-//    private class AdapterImageSlider(private val act: Activity, items: List<Image>) :
-//        PagerAdapter() {
-//        private var items: List<Image>
-//        private var onItemClickListener: OnItemClickListener? = null
-//
-//        private interface OnItemClickListener {
-//            fun onItemClick(view: View?, obj: Image?)
-//        }
-//
-//        fun setOnItemClickListener(onItemClickListener: OnItemClickListener?) {
-//            this.onItemClickListener = onItemClickListener
-//        }
-//
-//        override fun getCount(): Int {
-//            return items.size
-//        }
-//
-//        fun getItem(pos: Int): Image {
-//            return items[pos]
-//        }
-//
-//        fun setItems(items: List<Image>) {
-//            this.items = items
-//            notifyDataSetChanged()
-//        }
-//
-//        override fun isViewFromObject(view: View, `object`: Any): Boolean {
-//            return view === `object` as RelativeLayout
-//        }
-//
-//        override fun instantiateItem(container: ViewGroup, position: Int): Any {
-//            val o: Image = items[position]
-//            val inflater = act.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-//            val v: View = inflater.inflate(R.layout.item_slider_image, container, false)
-//            val image = v.findViewById<View>(R.id.image) as ImageView
-//            val lyt_parent: MaterialRippleLayout =
-//                v.findViewById<View>(R.id.lyt_parent) as MaterialRippleLayout
-//            Tools.displayImageOriginal(act, image, o.image)
-//            lyt_parent.setOnClickListener(View.OnClickListener { v ->
-//                if (onItemClickListener != null) {
-//                    onItemClickListener!!.onItemClick(v, o)
-//                }
-//            })
-//            (container as ViewPager).addView(v)
-//            return v
-//        }
-//
-//        override fun destroyItem(container: ViewGroup, position: Int, `object`: Any) {
-//            (container as ViewPager).removeView(`object` as RelativeLayout)
-//        }
-//
-//        // constructor
-//        init {
-//            this.items = items
-//        }
-//    }
+
+    fun readDb(){
+
+        val tmp = mutableListOf<DataFromList>()
+        myRef.addValueEventListener(object : ValueEventListener {
+
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                // This method is called once with the initial value and again
+                // whenever data at this location is updated.
+                tmp.clear()
+                val disksCount = dataSnapshot.child("Disk").children
+                for (i in disksCount){
+                    if(i.key.toString() == s.toString())
+                    {
+                        binding.textViewName.text = i.child("Name").value.toString()
+                        binding.textViewFF.text = i.child("FormFactor").value.toString()
+                        binding.textViewSize.text = i.child("Size").value.toString()
+                        binding.textViewType.text = i.child("Type").value.toString()
+                        binding.textViewWeight.text = i.child("Weight").value.toString()
+                        binding.textViewSpeed.text = i.child("Speed").value.toString()
+                        binding.textViewDes.text = i.child("Description").value.toString()
+                        Picasso.with(requireContext())
+                            .load(i.child("firstUrl").value.toString())
+                            .into(binding.imageView)
+                        firstUrl = i.child("firstUrl").value.toString()
+                    }
+
+
+                    Log.d("TAG1","${i.child("firstUrl").value.toString()} ${ i.child("Name").value.toString()} ${ i.key.toString()}")
+                    tmp.add(DataFromList(i.child("firstUrl").value.toString(),i.child("Name").value.toString(),i.key.toString().toInt()))
+                }
+                Log.d("TAG1", "Value is: ${tmp.toString()}")
+
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                // Failed to read value
+                Log.w("TAG1", "Failed to read value.", error.toException())
+            }
+        })
+    }
+
 
 }

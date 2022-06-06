@@ -37,15 +37,15 @@ class AdapterList: RecyclerView.Adapter<AdapterList.FavouriteViewHolder>() {
     }
 
     override fun onBindViewHolder(holder: FavouriteViewHolder, position: Int) {
-        val event = differ.currentList[position]
+        val disk = differ.currentList[position]
         with(holder.binding){
             Picasso.with(holder.itemView.context)
-                .load(event.imageUrl)
+                .load(disk.imageUrl)
                 .into(imageView)
-            textViewNameDisck.text = event.name
+            textViewNameDisck.text = disk.name
 
             holder.itemView.setOnClickListener {
-                onItemClickListener?.let { it1 -> it1(event.id) }
+                onItemClickListener?.let { it1 -> it1(disk.id) }
             }
         }
     }

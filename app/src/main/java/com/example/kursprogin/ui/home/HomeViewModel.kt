@@ -27,6 +27,7 @@ class HomeViewModel : ViewModel() {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 // This method is called once with the initial value and again
                 // whenever data at this location is updated.
+                tmp.clear()
                 val disksCount = dataSnapshot.child("Disk").children
                 for (i in disksCount){
                     Log.d("TAG1","${i.child("firstUrl").value.toString()} ${ i.child("Name").value.toString()} ${ i.key.toString().toInt()}")

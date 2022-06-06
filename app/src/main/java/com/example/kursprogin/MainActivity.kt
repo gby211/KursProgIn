@@ -29,7 +29,6 @@ class MainActivity : AppCompatActivity() {
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
         database = Firebase.database
         myRef = database.reference
 

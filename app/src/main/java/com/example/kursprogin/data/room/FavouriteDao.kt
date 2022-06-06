@@ -10,7 +10,7 @@ interface FavouriteDao {
     suspend fun saveFavourite(favouriteDto: FavouriteDto)
 
     @Query("SELECT * FROM favouriteTable")
-    fun getSavedFavourites(): LiveData<List<FavouriteDto>>
+    suspend fun getSavedFavourites(): List<FavouriteDto>
 
     @Delete
     suspend fun deleteFavourite(favouriteDto: FavouriteDto)

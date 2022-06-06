@@ -6,7 +6,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.Navigation
+import androidx.navigation.fragment.NavHostFragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.kursprogin.R
 import com.example.kursprogin.databinding.FragmentHomeBinding
 
 
@@ -20,12 +23,6 @@ class HomeFragment : Fragment() {
     private val binding get() = _binding!!
 
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-
-
-    }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
@@ -46,6 +43,18 @@ class HomeFragment : Fragment() {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
+        val navHostFragment =
+            activity?.supportFragmentManager?.findFragmentById(R.id.nav_host_fragment_activity_main) as NavHostFragment
+        val navController = navHostFragment.navController
+        adapter.setOnItemClickListener {
+            val bundle = Bundle().apply {
+                putInt("idDisk", it)
+            }
+            navController.navigate(
+                R.id.detailsFragment,
+                bundle
+            )
+        }
         _binding!!.recyclerView.layoutManager = LinearLayoutManager(context)
         _binding!!.recyclerView.adapter = adapter
 
