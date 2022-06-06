@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.example.kursprogin.data.room.dto.FavouriteDto
 import com.example.kursprogin.databinding.ItemHomeRecyBinding
 import com.squareup.picasso.Picasso
 
@@ -45,14 +46,14 @@ class AdapterList: RecyclerView.Adapter<AdapterList.FavouriteViewHolder>() {
             textViewNameDisck.text = disk.name
 
             holder.itemView.setOnClickListener {
-                onItemClickListener?.let { it1 -> it1(disk.id) }
+                onItemClickListener?.let { it1 -> it1(FavouriteDto(disk.id,disk.name,disk.imageUrl)) }
             }
         }
     }
 
-    private var onItemClickListener: ((Int) -> Unit)? = null
+    private var onItemClickListener: ((FavouriteDto) -> Unit)? = null
 
-    fun setOnItemClickListener(listener:(Int) -> Unit){
+    fun setOnItemClickListener(listener:(FavouriteDto) -> Unit){
         onItemClickListener = listener
     }
 

@@ -18,6 +18,7 @@ class FavoriteFragment : Fragment() {
 
     private var _binding: FragmentFavoriteBinding? = null
     private val adapter = AdapterList()
+    private lateinit var favoriteViewModel : FavoriteViewModel
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
@@ -32,7 +33,7 @@ class FavoriteFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val favoriteViewModel =
+        favoriteViewModel =
             ViewModelProvider(this).get(FavoriteViewModel::class.java)
 
 
@@ -47,6 +48,11 @@ class FavoriteFragment : Fragment() {
                 adapter.notifyDataSetChanged()
             }
         return binding.root
+    }
+
+    override fun onResume() {
+        super.onResume()
+        runBlocking { favoriteViewModel.readDbRoom() }
     }
 
     override fun onDestroyView() {

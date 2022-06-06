@@ -48,7 +48,9 @@ class HomeFragment : Fragment() {
         val navController = navHostFragment.navController
         adapter.setOnItemClickListener {
             val bundle = Bundle().apply {
-                putInt("idDisk", it)
+                putInt("idDisk", it.id)
+                putString("nameDisk", it.nameDisk)
+                putString("imageDisk", it.imageUrl)
             }
             navController.navigate(
                 R.id.detailsFragment,

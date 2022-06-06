@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.example.kursprogin.data.room.DbRoom
 import com.example.kursprogin.data.room.dto.FavouriteDto
@@ -15,18 +16,20 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
 import com.squareup.picasso.Picasso
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
-import kotlinx.coroutines.withContext
 
 class DetailsFragment : Fragment() {
 
 
-    private lateinit var dbbbb : DbRoom
+    private lateinit var dbbbb: DbRoom
     private var _binding: FragmentDetailsBinding? = null
     private val binding get() = _binding!!
-    private var s : Int = 1
-    private var firstUrl = "https://firebasestorage.googleapis.com/v0/b/kursovaia-f942a.appspot.com/o/1.1.jpg?alt=media&token=1fb6724e-2bb9-415f-b7af-0be0ffd9d2e6"
+    private var idDisk: Int = 1
+    private var nameDisk: String = "no Name"
+    private var imageDisk: String = "https://firebasestorage.googleapis.com/v0/b/kursovaia-f942a.appspot.com/o/1.1.jpg?alt=media&token=1fb6724e-2bb9-415f-b7af-0be0ffd9d2e6"
+    private var tmpSer = false
+
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -35,21 +38,41 @@ class DetailsFragment : Fragment() {
 
         dbbbb = DbRoom(requireContext())
         val b = arguments
-        s = b!!.getInt("idDisk")
+        idDisk = b!!.getInt("idDisk")
 
-        binding.textViewName.text = s.toString()
+        binding.textViewName.text = idDisk.toString()
         readDb()
 
         binding.imageViewB.setOnClickListener {
-            runBlocking { dbbbb.getFavouriteDao().saveFavourite(FavouriteDto(s,binding.textViewName.text.toString(),firstUrl)) }
-
+            tmpSer = !tmpSer
+            runBlocking {
+                if (tmpSer) {
+                    dbbbb.getFavouriteDao().saveFavourite(
+                        FavouriteDto(
+                            idDisk,
+                            binding.textViewName.text.toString(),
+                            imageDisk
+                        )
+                    )
+                    Toast.makeText(context,"added",Toast.LENGTH_SHORT).show()
+                }else{
+                    dbbbb.getFavouriteDao().deleteFavourite(
+                        FavouriteDto(
+                            idDisk,
+                            binding.textViewName.text.toString(),
+                            imageDisk
+                        )
+                    )
+                    Toast.makeText(context,"deleted",Toast.LENGTH_SHORT).show()
+                }
+            }
         }
 
         return binding.root
     }
 
 
-    fun readDb(){
+    fun readDb() {
 
         val tmp = mutableListOf<DataFromList>()
         myRef.addValueEventListener(object : ValueEventListener {
@@ -59,10 +82,10 @@ class DetailsFragment : Fragment() {
                 // whenever data at this location is updated.
                 tmp.clear()
                 val disksCount = dataSnapshot.child("Disk").children
-                for (i in disksCount){
-                    if(i.key.toString() == s.toString())
-                    {
+                for (i in disksCount) {
+                    if (i.key.toString() == idDisk.toString()) {
                         binding.textViewName.text = i.child("Name").value.toString()
+                        nameDisk = i.child("Name").value.toString()
                         binding.textViewFF.text = i.child("FormFactor").value.toString()
                         binding.textViewSize.text = i.child("Size").value.toString()
                         binding.textViewType.text = i.child("Type").value.toString()
@@ -72,12 +95,33 @@ class DetailsFragment : Fragment() {
                         Picasso.with(requireContext())
                             .load(i.child("firstUrl").value.toString())
                             .into(binding.imageView)
-                        firstUrl = i.child("firstUrl").value.toString()
+                        imageDisk = i.child("firstUrl").value.toString()
+
+                        runBlocking {
+
+                            var tmpDto = listOf<FavouriteDto>()
+                            tmpDto = dbbbb.getFavouriteDao().getSavedFavourites()
+                            for (i in tmpDto){
+                                if (nameDisk == i.nameDisk){
+                                    binding.imageViewB.setChecked(true)
+                                    tmpSer = true
+                                }
+                            }
+                        }
                     }
 
 
-                    Log.d("TAG1","${i.child("firstUrl").value.toString()} ${ i.child("Name").value.toString()} ${ i.key.toString()}")
-                    tmp.add(DataFromList(i.child("firstUrl").value.toString(),i.child("Name").value.toString(),i.key.toString().toInt()))
+                    Log.d(
+                        "TAG1",
+                        "${i.child("firstUrl").value.toString()} ${i.child("Name").value.toString()} ${i.key.toString()}"
+                    )
+                    tmp.add(
+                        DataFromList(
+                            i.child("firstUrl").value.toString(),
+                            i.child("Name").value.toString(),
+                            i.key.toString().toInt()
+                        )
+                    )
                 }
                 Log.d("TAG1", "Value is: ${tmp.toString()}")
 
