@@ -17,6 +17,7 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
 import com.squareup.picasso.Picasso
 import kotlinx.coroutines.runBlocking
+import com.example.kursprogin.discLiked as discLiked
 
 class DetailsFragment : Fragment() {
 
@@ -54,6 +55,7 @@ class DetailsFragment : Fragment() {
                             imageDisk
                         )
                     )
+                    discLiked+=1
                     Toast.makeText(context,"added",Toast.LENGTH_SHORT).show()
                 }else{
                     dbbbb.getFavouriteDao().deleteFavourite(

@@ -17,6 +17,9 @@ import com.google.firebase.ktx.Firebase
 lateinit var myRef : DatabaseReference
 lateinit var database : FirebaseDatabase
 
+var discLiked = 0
+var discViewed = 0
+
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding

@@ -11,6 +11,7 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.kursprogin.R
 import com.example.kursprogin.databinding.FragmentHomeBinding
+import com.example.kursprogin.discViewed
 
 
 class HomeFragment : Fragment() {
@@ -52,6 +53,7 @@ class HomeFragment : Fragment() {
                 putString("nameDisk", it.nameDisk)
                 putString("imageDisk", it.imageUrl)
             }
+            discViewed+=1
             navController.navigate(
                 R.id.detailsFragment,
                 bundle

@@ -10,6 +10,8 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.NavHostFragment
 import com.example.kursprogin.R
 import com.example.kursprogin.databinding.FragmentProfileBinding
+import com.example.kursprogin.discLiked
+import com.example.kursprogin.discViewed
 
 class ProfileFragment : Fragment() {
 
@@ -35,7 +37,9 @@ class ProfileFragment : Fragment() {
         binding.buttonAbout.setOnClickListener{
             navController.navigate(R.id.aboutAppFragment)
         }
-
+        binding.profile.text = android.os.Build.MODEL
+        binding.textViewDiscsLiked.text = discLiked.toString()
+        binding.textViewDiscsViewed.text = discViewed.toString()
         return root
     }
 
