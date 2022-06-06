@@ -6,9 +6,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.NavHostFragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.kursprogin.R
 import com.example.kursprogin.data.room.DbRoom
 import com.example.kursprogin.databinding.FragmentFavoriteBinding
+import com.example.kursprogin.discViewed
 import com.example.kursprogin.ui.home.AdapterList
 import kotlinx.coroutines.runBlocking
 
@@ -47,6 +50,21 @@ class FavoriteFragment : Fragment() {
                 adapter.differ.submitList(it)
                 adapter.notifyDataSetChanged()
             }
+        val navHostFragment =
+            activity?.supportFragmentManager?.findFragmentById(R.id.nav_host_fragment_activity_main) as NavHostFragment
+        val navController = navHostFragment.navController
+        adapter.setOnItemClickListener {
+            val bundle = Bundle().apply {
+                putInt("idDisk", it.id)
+                putString("nameDisk", it.nameDisk)
+                putString("imageDisk", it.imageUrl)
+            }
+            discViewed +=1
+            navController.navigate(
+                R.id.detailsFragment,
+                bundle
+            )
+        }
         return binding.root
     }
 

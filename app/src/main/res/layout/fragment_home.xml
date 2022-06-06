@@ -21,21 +21,20 @@
 
     <com.google.android.material.chip.ChipGroup
         android:id="@+id/chipGroup"
-        app:singleSelection="false"
-        android:layout_marginHorizontal="16dp"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:singleSelection="false">
 
         <com.google.android.material.chip.Chip
-            style="@style/Widget.MaterialComponents.Chip.Choice"
             android:id="@+id/chipSsd"
+            style="@style/Widget.MaterialComponents.Chip.Choice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:text="ssd"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:textColor="@color/grey_60"
             app:checkedIcon="@drawable/ic_done"
             app:checkedIconEnabled="true"
@@ -44,30 +43,30 @@
             app:chipEndPadding="15dp"
             app:chipStartPadding="15dp"
             app:chipStrokeColor="@color/grey_20"
-            app:chipStrokeWidth="1dp"/>
+            app:chipStrokeWidth="1dp" />
 
         <com.google.android.material.chip.Chip
-            style="@style/Widget.MaterialComponents.Chip.Choice"
             android:id="@+id/chip35"
+            style="@style/Widget.MaterialComponents.Chip.Choice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:text="@string/_3_5"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:textColor="@color/grey_60"
             app:checkedIcon="@drawable/ic_done"
             app:checkedIconEnabled="true"
-            android:textColor="@color/grey_60"
             app:checkedIconTint="@color/grey_60"
             app:chipBackgroundColor="@color/color_state_chip_outline"
             app:chipEndPadding="15dp"
             app:chipStartPadding="15dp"
             app:chipStrokeColor="@color/grey_20"
-            app:chipStrokeWidth="1dp"/>
+            app:chipStrokeWidth="1dp" />
 
         <com.google.android.material.chip.Chip
-            style="@style/Widget.MaterialComponents.Chip.Choice"
             android:id="@+id/chip25"
+            style="@style/Widget.MaterialComponents.Chip.Choice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:text="@string/_2_5"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:textColor="@color/grey_60"
             app:checkedIcon="@drawable/ic_done"
             app:checkedIconEnabled="true"
@@ -76,14 +75,14 @@
             app:chipEndPadding="15dp"
             app:chipStartPadding="15dp"
             app:chipStrokeColor="@color/grey_20"
-            app:chipStrokeWidth="1dp"/>
+            app:chipStrokeWidth="1dp" />
 
         <com.google.android.material.chip.Chip
-            style="@style/Widget.MaterialComponents.Chip.Choice"
             android:id="@+id/chip1T"
-            android:text="1 TB"
+            style="@style/Widget.MaterialComponents.Chip.Choice"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="1000 GB"
             android:textColor="@color/grey_60"
             app:checkedIcon="@drawable/ic_done"
             app:checkedIconEnabled="true"
@@ -92,14 +91,14 @@
             app:chipEndPadding="15dp"
             app:chipStartPadding="15dp"
             app:chipStrokeColor="@color/grey_20"
-            app:chipStrokeWidth="1dp"/>
+            app:chipStrokeWidth="1dp" />
 
         <com.google.android.material.chip.Chip
-            android:id="@+id/chipSEAGATE"
+            android:id="@+id/chipHDD"
+            style="@style/Widget.MaterialComponents.Chip.Choice"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            style="@style/Widget.MaterialComponents.Chip.Choice"
-            android:text="SEAGATE"
+            android:text="HDD"
             android:textColor="@color/grey_60"
             app:checkedIcon="@drawable/ic_done"
             app:checkedIconEnabled="true"
@@ -108,14 +107,14 @@
             app:chipEndPadding="15dp"
             app:chipStartPadding="15dp"
             app:chipStrokeColor="@color/grey_20"
-            app:chipStrokeWidth="1dp"/>
+            app:chipStrokeWidth="1dp" />
 
         <com.google.android.material.chip.Chip
-            android:id="@+id/chipTOSHIBA"
+            android:id="@+id/chip120_GB"
+            style="@style/Widget.MaterialComponents.Chip.Choice"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            style="@style/Widget.MaterialComponents.Chip.Choice"
-            android:text="TOSHIBA"
+            android:text="120 GB"
             android:textColor="@color/grey_60"
             app:checkedIcon="@drawable/ic_done"
             app:checkedIconEnabled="true"
@@ -124,23 +123,7 @@
             app:chipEndPadding="15dp"
             app:chipStartPadding="15dp"
             app:chipStrokeColor="@color/grey_20"
-            app:chipStrokeWidth="1dp"/>
-
-        <com.google.android.material.chip.Chip
-            android:id="@+id/chipWD"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            style="@style/Widget.MaterialComponents.Chip.Choice"
-            android:text="WD"
-            android:textColor="@color/grey_60"
-            app:checkedIcon="@drawable/ic_done"
-            app:checkedIconEnabled="true"
-            app:checkedIconTint="@color/grey_60"
-            app:chipBackgroundColor="@color/color_state_chip_outline"
-            app:chipEndPadding="15dp"
-            app:chipStartPadding="15dp"
-            app:chipStrokeColor="@color/grey_20"
-            app:chipStrokeWidth="1dp"/>
+            app:chipStrokeWidth="1dp" />
 
     </com.google.android.material.chip.ChipGroup>
 </androidx.constraintlayout.widget.ConstraintLayout>
