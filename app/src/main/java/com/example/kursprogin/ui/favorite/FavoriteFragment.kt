@@ -12,6 +12,7 @@ import com.example.kursprogin.R
 import com.example.kursprogin.data.room.DbRoom
 import com.example.kursprogin.databinding.FragmentFavoriteBinding
 import com.example.kursprogin.discViewed
+import com.example.kursprogin.modelProfileAll
 import com.example.kursprogin.ui.home.AdapterList
 import kotlinx.coroutines.runBlocking
 
@@ -60,6 +61,7 @@ class FavoriteFragment : Fragment() {
                 putString("imageDisk", it.imageUrl)
             }
             discViewed +=1
+            modelProfileAll.viewed+=1
             navController.navigate(
                 R.id.detailsFragment,
                 bundle

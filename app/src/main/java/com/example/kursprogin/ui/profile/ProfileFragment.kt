@@ -12,6 +12,7 @@ import com.example.kursprogin.R
 import com.example.kursprogin.databinding.FragmentProfileBinding
 import com.example.kursprogin.discLiked
 import com.example.kursprogin.discViewed
+import com.example.kursprogin.modelProfileAll
 
 class ProfileFragment : Fragment() {
 
@@ -38,8 +39,8 @@ class ProfileFragment : Fragment() {
             navController.navigate(R.id.aboutAppFragment)
         }
         binding.profile.text = android.os.Build.MODEL
-        binding.textViewDiscsLiked.text = discLiked.toString()
-        binding.textViewDiscsViewed.text = discViewed.toString()
+        binding.textViewDiscsLiked.text = modelProfileAll.liked.toString()
+        binding.textViewDiscsViewed.text = modelProfileAll.viewed.toString()
         return root
     }
 

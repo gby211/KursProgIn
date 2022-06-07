@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment
 import com.example.kursprogin.data.room.DbRoom
 import com.example.kursprogin.data.room.dto.FavouriteDto
 import com.example.kursprogin.databinding.FragmentDetailsBinding
+import com.example.kursprogin.modelProfileAll
 import com.example.kursprogin.myRef
 import com.example.kursprogin.ui.home.DataFromList
 import com.google.firebase.database.DataSnapshot
@@ -56,6 +57,7 @@ class DetailsFragment : Fragment() {
                         )
                     )
                     discLiked+=1
+                    modelProfileAll.liked+=1
                     Toast.makeText(context,"added",Toast.LENGTH_SHORT).show()
                 }else{
                     dbbbb.getFavouriteDao().deleteFavourite(
@@ -73,7 +75,7 @@ class DetailsFragment : Fragment() {
         return binding.root
     }
 
-
+// FIXME
     fun readDb() {
 
         val tmp = mutableListOf<DataFromList>()
@@ -94,7 +96,7 @@ class DetailsFragment : Fragment() {
                         binding.textViewWeight.text = i.child("Weight").value.toString()
                         binding.textViewSpeed.text = i.child("Speed").value.toString()
                         binding.textViewDes.text = i.child("Description").value.toString()
-                        Picasso.with(requireContext())
+                        Picasso.with(context)
                             .load(i.child("firstUrl").value.toString())
                             .into(binding.imageView)
                         imageDisk = i.child("firstUrl").value.toString()

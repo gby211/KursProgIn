@@ -7,6 +7,7 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.kursprogin.databinding.ActivityMainBinding
+import com.example.kursprogin.ui.profile.ModelProfile
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
@@ -16,7 +17,7 @@ import com.google.firebase.ktx.Firebase
 
 lateinit var myRef : DatabaseReference
 lateinit var database : FirebaseDatabase
-
+lateinit var modelProfileAll: ModelProfile
 var discLiked = 0
 var discViewed = 0
 
@@ -29,6 +30,8 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        modelProfileAll = ModelProfile(android.os.Build.MODEL,0,0)
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)

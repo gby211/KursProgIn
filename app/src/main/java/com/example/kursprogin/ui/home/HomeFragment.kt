@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.kursprogin.R
 import com.example.kursprogin.databinding.FragmentHomeBinding
 import com.example.kursprogin.discViewed
+import com.example.kursprogin.modelProfileAll
 
 
 class HomeFragment : Fragment() {
@@ -54,6 +55,7 @@ class HomeFragment : Fragment() {
                 putString("imageDisk", it.imageUrl)
             }
             discViewed+=1
+            modelProfileAll.viewed+=1
             navController.navigate(
                 R.id.detailsFragment,
                 bundle
@@ -70,5 +72,6 @@ class HomeFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+        homeViewModel.writeDb()
     }
 }
